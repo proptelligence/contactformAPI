@@ -27,7 +27,7 @@ app.post('/send-email', (req, res) => {
     // Email configuration
     const mailOptions = {
       from: 'workingajay7@gmail.com',
-      to: 'ajaymedidhi858@gmail.com',
+      to: 'info@protelligence.net',
       subject: 'New Contact Form Submission',
       text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
     };
