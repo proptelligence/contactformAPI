@@ -18,15 +18,15 @@ app.post('/send-email', (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'workingajay7@gmail.com',
-          pass: 'jhkq lndj hpyi kmns', // Use the App Password generated from Google Account
+          user: 'proptechdevelopment@gmail.com',
+          pass: 'fugc jdcs zpui kbjt', // Use the App Password generated from Google Account
         },
       });
       
 
     // Email configuration
     const mailOptions = {
-      from: 'workingajay7@gmail.com',
+      from: 'proptechdevelopment@gmail.com',
       to: 'info@protelligence.net',
       subject: 'New Contact Form Submission',
       text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
