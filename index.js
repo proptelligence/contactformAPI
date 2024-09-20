@@ -1,49 +1,43 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Add this line for CORS
+const cors = require('cors');
 
 const app = express();
 
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/send-email', (req, res) => {
+app.post('/contact/send-email', (req, res) => {
   try {
-    // Your email sending logic here
-    const { firstName, lastName, email, message } = req.body;
+    const { name, mobileNumber, email, message } = req.body; // Ensure field names match
 
-    // Set up nodemailer transporter with your email credentials
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'proptechdevelopment@gmail.com',
-          pass: 'fugc jdcs zpui kbjt', // Use the App Password generated from Google Account
-        },
-      });
-      
+      service: 'gmail',
+      auth: {
+        user: 'proptechdevelopment@gmail.com',
+        pass: 'fugc jdcs zpui kbjt', // Ensure this is your App Password
+      },
+    });
 
-    // Email configuration
     const mailOptions = {
       from: 'proptechdevelopment@gmail.com',
       to: 'info@protelligence.net',
       subject: 'New Contact Form Submission',
-      text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
+      text: `Name: ${name}\nMobile Number: ${mobileNumber}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    // Send email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email:', error);
-        res.status(500).send('Internal Server Error');
-      } else {
-        console.log('Email sent successfully!', info.response);
-        res.status(200).send('Email sent successfully!');
+        return res.status(500).send('Internal Server Error');
       }
+      console.log('Email sent successfully!', info.response);
+      res.status(200).send('Email sent successfully!');
     });
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error processing request:', error);
     res.status(500).send('Internal Server Error');
   }
 });
